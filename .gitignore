@@ -1,7 +1,7 @@
 # Ignore real env files
 **/.env
 **/.env.*
-**/.env.prod  
+ 
 
 # But DO NOT ignore the example files
 !**/.env.example
