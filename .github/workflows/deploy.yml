@@ -22,5 +22,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no -T ${{ secrets.VPS_HOST }} << 'EOF'
             cd /root/uptime-application
             git pull origin main
-            docker compose -f docker-compose.prod.yml --project-name uptime-prod up --build 
+            docker compose -f docker-compose.prod.yml --project-name uptime-prod up -d --build 
           EOF
