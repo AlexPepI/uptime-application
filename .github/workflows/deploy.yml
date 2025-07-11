@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -T ${{ secrets.VPS_HOST }} << 'EOF'
             cd /root/uptime-application
             git pull origin main
             docker compose -f docker-compose.prod.yml --project-name uptime-prod up --build 
