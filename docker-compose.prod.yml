@@ -7,6 +7,8 @@ services:
       context: ./client
       dockerfile: Dockerfile.prod
     container_name: uptime-client-prod
+    env_file:
+      - ./client/.env
     networks:
       - mynet
 
@@ -16,14 +18,10 @@ services:
       context: ./api
       dockerfile: Dockerfile.prod
     container_name: uptime-api-prod
+    env_file:
+      - ./api/.env.prod
     depends_on:
       - postgres
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=uptime
-      - DB_USER=postgres
-      - DB_PASS=postgres
     networks:
       - mynet
 

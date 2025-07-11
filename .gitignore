@@ -1,5 +1,9 @@
-# Ignore all .env files in subfolders
+# Ignore real env files
 **/.env
+**/.env.*  # ignore all variations, like .env.dev, .env.prod
+
+# But DO NOT ignore the example files
+!**/.env.example
 
 # Node
 node_modules/

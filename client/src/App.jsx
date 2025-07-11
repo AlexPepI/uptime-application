@@ -8,15 +8,17 @@ function App() {
   const [serverMsg,setServerMsg] = useState(null)
 
 useEffect(()=>{
+  
   const testFetch = async () =>{
     const response = await fetch(`${API_BASE_URL}/test`);
     const json = await response.json();
     if(response.ok){
       setServerMsg(json)
     }
-    console.log(API_BASE_URL)
   }
+
   testFetch();
+  
 },[])
 
   return (
@@ -26,6 +28,8 @@ useEffect(()=>{
       </div>
       <div>
         {serverMsg && serverMsg}
+      </div>
+      <div>
       </div>
     </>
   )
