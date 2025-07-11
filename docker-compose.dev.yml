@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   api:
     container_name: uptime-api-dev
@@ -11,7 +9,7 @@ services:
     ports:
       - "3001:3001"
     env_file:
-      - ./api/.env
+      - ./api/.env.dev
     depends_on:
       - postgres
 
@@ -26,7 +24,7 @@ services:
     ports:
       - "5173:5173"
     env_file:
-      - ./client/.env
+      - ./client/.env.dev
 
   postgres:
     image: postgres:15
@@ -41,5 +39,20 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-dev
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
 volumes:
   pgdata:
+  pgadmin_data:
