@@ -15,7 +15,7 @@ fi
 
 mkdir -p "$data_path/www"
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
-  mkdir -p /var/www/certbot" nginx
+  mkdir -p /var/www/certbot" gateway
 docker compose -f docker-compose.prod.yml run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
   --email $email --agree-tos --no-eff-email \
