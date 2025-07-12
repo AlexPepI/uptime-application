@@ -64,6 +64,15 @@ services:
       --email alexandrospeponis1999@gmail.com --agree-tos --no-eff-email
       -d pepsmonitor.com -d www.pepsmonitor.com && exit 0 || exit 1"
 
+  certbot-renew:
+    image: certbot/certbot
+    container_name: certbot-renew
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: >
+      sh -c "certbot renew --webroot -w /var/www/certbot"
+      
 volumes:
   pgdata:
   certbot-etc:
