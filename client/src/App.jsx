@@ -30,7 +30,7 @@ useEffect(()=>{
         {serverMsg && serverMsg}
       </div>
       <div>
-        TEST#2
+        TEST
       </div>
     </>
   )
