@@ -24,7 +24,7 @@ useEffect(()=>{
   return (
     <>
       <div>
-        Hello from the Client !!
+        Hello from the Client !
       </div>
       <div>
         {serverMsg && serverMsg}
