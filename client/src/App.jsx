@@ -29,9 +29,6 @@ useEffect(()=>{
       <div>
         {serverMsg && serverMsg}
       </div>
-      <div>
-        TEST
-      </div>
     </>
   )
 }
