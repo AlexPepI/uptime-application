@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')).render(
      appearance={{baseTheme:dark}}
     >
       <ClerkLoading>
-        LOADING ..
+        LOADING ...
       </ClerkLoading>
       <ClerkLoaded>
         <App />  
