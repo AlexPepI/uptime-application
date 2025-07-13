@@ -1,18 +1,10 @@
-import User from '../models/User.js';
+import { getAuth,clerkClient } from "@clerk/express"
 
-const signupUser = async (username) => {
+const WhoAmI = async (req) => {
 
-    await User.create({
-        username:username
-    })
-    
+    const { userId } = getAuth(req)
+    const user = await clerkClient.users.getUser(userId)
+    return(user)
 }
 
-const getAllUsers = async () => {
-
-    const result = await User.findAll()
-    return result
-
-}
-
-export {signupUser,getAllUsers}
+export {WhoAmI}
