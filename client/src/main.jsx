@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
      afterSignOutUrl='/'
     >
       <ClerkLoading>
-        LOADING ...
+        LOADING ..
       </ClerkLoading>
       <ClerkLoaded>
         <App />  
