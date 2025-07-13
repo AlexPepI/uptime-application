@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.33.0",
     "@clerk/react-router": "^1.7.0",
+    "@clerk/themes": "^2.2.55",
     "@tailwindcss/vite": "^4.1.11",
     "dotenv": "^17.2.0",
     "react": "^19.1.0",
