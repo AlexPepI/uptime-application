@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom"
+import {dark} from "@clerk/themes";
+import { Link } from "react-router-dom";
 import { useAuth } from '@clerk/clerk-react';
 import { UserButton } from "@clerk/clerk-react";
+import { useTheme } from "@/providers/ThemeProvider";
 
 const Navbar = () => {
 
-  const { userId } = useAuth();
+    const { userId } = useAuth();
+    const { theme } = useTheme();
 
     return(
         <div className="rounded-b-xl">
@@ -28,7 +31,11 @@ const Navbar = () => {
                                 Dashboard
                             </Link>
                             <li>
-                                <UserButton/>
+                                <UserButton
+                                    appearance={{ 
+                                        baseTheme: theme === "dark" ? dark : ""
+                                    }}  
+                                />
                             </li>
                         </>
                     }

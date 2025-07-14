@@ -1,7 +1,5 @@
 import './index.css'
 import App from './App.jsx'
-import LayoutUnauth from './components/LayoutUnauth'
-import {dark} from "@clerk/themes"
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from './providers/ThemeProvider'
@@ -13,17 +11,19 @@ if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
 }
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
       <ClerkProvider
       publishableKey={PUBLISHABLE_KEY} 
       afterSignOutUrl='/'
-      appearance={{baseTheme:dark}}
       >
         <ClerkLoading>
             <div className='h-screen'>
-              LOADING ...
+              <div className="flex items-center justify-center h-full">
+                LOADING ...
+              </div>
             </div>
         </ClerkLoading>
         <ClerkLoaded>
