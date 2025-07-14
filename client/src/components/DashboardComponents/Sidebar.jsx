@@ -17,7 +17,6 @@ import { dark } from "@clerk/themes";
 import { UserButton } from "@clerk/clerk-react";
 import { useTheme } from "@/providers/ThemeProvider";
 
-
 const items =[
     {
         title:"Home",
@@ -46,7 +45,6 @@ const items =[
     },
 ]
 
-
 const SideBar = () => {
 
   const { theme } = useTheme();
@@ -60,6 +58,7 @@ const SideBar = () => {
           </Link>
         </SidebarMenuItem>
       </SidebarHeader>
+      <SidebarSeparator className="m-0"/>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>

@@ -3,7 +3,7 @@ import { Moon,Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
 import { useTheme } from "@/providers/ThemeProvider";
-
+import { SidebarTrigger } from "../ui/sidebar";
 
 const NavbarAuth = () => {
 
@@ -11,7 +11,7 @@ const NavbarAuth = () => {
 
     return(
     <nav className=" px-4 flex h-[60px] items-center justify-between">
-        <div>Collapse Button</div>
+        <SidebarTrigger/>
         <div className=" gap-6 flex items-center justify-between">
             <Link to="/">Home</Link>
             {
