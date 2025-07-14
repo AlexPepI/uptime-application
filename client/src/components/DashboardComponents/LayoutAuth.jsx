@@ -6,15 +6,13 @@ const LayoutAuth = ({children}) => {
 
     return(
         <SidebarProvider>
-            <div className="flex h-screen">
-                <SideBar/>
+            <SideBar/>
                 <main className="w-full">
                     <NavbarAuth/>            
                     <div className="px-4">
                         {children}
                     </div>
                 </main>
-            </div>
         </SidebarProvider>
     )
 

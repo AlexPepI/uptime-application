@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-import { Home,Inbox,Calendar,Search,Settings } from "lucide-react";
+import { Home,Inbox,Calendar,Search,Settings,User2,ChevronUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarSeparator,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter
 } from "@/components/ui/sidebar"
-
+import { dark } from "@clerk/themes";
+import { UserButton } from "@clerk/clerk-react";
+import { useTheme } from "@/providers/ThemeProvider";
 
 
 const items =[
@@ -44,8 +49,17 @@ const items =[
 
 const SideBar = () => {
 
- return (
+  const { theme } = useTheme();
+
+  return (
     <Sidebar>
+      <SidebarHeader className="flex h-[60px]">
+        <SidebarMenuItem className="list-none  my-auto">
+          <Link to="/">
+            Peps Monitor Logo
+          </Link>
+        </SidebarMenuItem>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -65,6 +79,21 @@ const SideBar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+            <SidebarSeparator className="m-0"/>
+      <SidebarFooter className="mb-1">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton className=" flex cursor-pointer h-10">
+              <UserButton 
+                appearance={{ 
+                    baseTheme: theme === "dark" ? dark : ""
+                }}  
+              />
+              <span className="">Alekos</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 

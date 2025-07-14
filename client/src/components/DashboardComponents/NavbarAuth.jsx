@@ -10,8 +10,8 @@ const NavbarAuth = () => {
     const { theme, setTheme } = useTheme();
 
     return(
-    <nav className="p-4 flex items-center justify-between">
-        Collapse Button
+    <nav className=" px-4 flex h-[60px] items-center justify-between">
+        <div>Collapse Button</div>
         <div className=" gap-6 flex items-center justify-between">
             <Link to="/">Home</Link>
             {
