@@ -7,7 +7,7 @@ const Navbar = () => {
   const { userId } = useAuth();
 
     return(
-        <div className="bg-cyan-950 rounded-b-xl">
+        <div className="rounded-b-xl">
             <ul className="flex justify-between py-4 px-6">
                 <div>
                     <Link to="/">Home</Link>

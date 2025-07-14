@@ -1,6 +1,7 @@
-import { useEffect,useState } from "react";
 import IsAuth from "../components/IsAuth";
+import { useEffect,useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
+import LayoutAuth from "@/components/DashboardComponents/LayoutAuth";
 
 const Dashboard = () =>{
 
@@ -30,8 +31,9 @@ const Dashboard = () =>{
 
     return(
         <IsAuth>
+          <LayoutAuth>
             Dashboard
-            User : {user}
+          </LayoutAuth>
         </IsAuth>
     )
 
