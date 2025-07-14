@@ -9,14 +9,13 @@ const NavbarAuth = () => {
 
     const { theme, setTheme } = useTheme();
 
-
     return(
     <nav className="p-4 flex items-center justify-between">
         Collapse Button
         <div className=" gap-6 flex items-center justify-between">
             <Link to="/">Home</Link>
             {
-                theme==="dark" 
+                theme==="light" 
                 ?
                     <Moon className="cursor-pointer" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}/>
                 :
