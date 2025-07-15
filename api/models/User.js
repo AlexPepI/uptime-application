@@ -10,6 +10,10 @@ const User = sequelize.define("user",{
     clerk_Id: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    sitesMonitoring : {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 },{
     timestamps:false

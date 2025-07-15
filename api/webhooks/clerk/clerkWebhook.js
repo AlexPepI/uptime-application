@@ -18,7 +18,8 @@ clerkWebhookRouter.post(
       if (evt.type === 'user.created') {
         const clerkId = evt.data.id;
         await User.create({
-            clerk_Id:clerkId
+            clerk_Id:clerkId,
+            sitesMonitoring:0
         })
       }
       res.status(200).send('Webhook received');

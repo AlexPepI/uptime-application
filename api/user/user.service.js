@@ -14,7 +14,8 @@ const getAllUsersService = async () => {
 
 const signUpService = async (clerkId) =>{
     await User.create({
-        clerk_Id:clerkId
+        clerk_Id:clerkId,
+        sitesMonitoring:0
     })
     return(`User with clerkId = ${clerkId}, Signed Up to our database`)
 }

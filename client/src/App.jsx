@@ -1,6 +1,6 @@
 import './App.css';
 import Sites from './pages/Sites';
-import { useEffect } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import HomePage from './pages/Home';
 import SignInPage from './pages/SignIn';
 import SignUpPage from "./pages/SignUp";
@@ -10,8 +10,9 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
 function App() {
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-  const { getToken } = useAuth();
+  // const {user} = useUser();
+  // console.log(user.id)
+
 
   return (
     <Router>
