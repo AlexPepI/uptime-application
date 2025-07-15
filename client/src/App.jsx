@@ -1,9 +1,10 @@
-import './App.css'
-import { useAuth } from '@clerk/clerk-react';
+import './App.css';
+import Sites from './pages/Sites';
+import { useEffect } from 'react';
 import HomePage from './pages/Home';
 import SignInPage from './pages/SignIn';
 import SignUpPage from "./pages/SignUp";
-import { useState,useEffect } from 'react';
+import { useAuth } from '@clerk/clerk-react';
 import DashboardPage from './pages/Dashboard';
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage/>}/>
           <Route path="/sign-in" element={<SignInPage/>}/>
           <Route path="/dashboard" element={<DashboardPage/>}/>
+          <Route path="/sites" element={<Sites/>}/>    
       </Routes>
     </Router>
   )

@@ -11,7 +11,7 @@ const NavbarAuth = () => {
 
     return(
     <nav className=" px-4 flex h-[60px] items-center justify-between">
-        <SidebarTrigger/>
+        <SidebarTrigger className="cursor-pointer"/>
         <div className=" gap-6 flex items-center justify-between">
             <Link to="/">Home</Link>
             {

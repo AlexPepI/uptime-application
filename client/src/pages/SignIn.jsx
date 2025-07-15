@@ -11,7 +11,7 @@ const SignInPage = () => {
     <LayoutUnauth>
       <SignIn 
         signUpUrl="/sign-up" 
-        forceRedirectUrl={"/dashboard"} 
+        forceRedirectUrl={"/sites"} 
         appearance={{ 
             baseTheme: theme === "dark" ? dark : ""
           }}   

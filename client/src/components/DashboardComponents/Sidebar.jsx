@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { Home,Inbox,Calendar,Search,Settings,User2,ChevronUp } from "lucide-react";
+import { Home,Inbox,Calendar,Plus,ChartColumn } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarGroupAction,
   SidebarSeparator,
   SidebarMenu,
   SidebarMenuButton,
@@ -32,17 +33,7 @@ const items =[
         title:"Calendar",
         url:"/",
         icon: Calendar
-    },
-    {
-        title:"Search",
-        url:"/",
-        icon: Search
-    },
-    {
-        title:"Settings",
-        url:"/",
-        icon: Settings
-    },
+    }
 ]
 
 const SideBar = () => {
@@ -77,8 +68,26 @@ const SideBar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-      </SidebarContent>
-            <SidebarSeparator className="m-0"/>
+        <SidebarGroup>
+          <SidebarGroupLabel>Monitoring</SidebarGroupLabel>
+          <SidebarGroupAction>
+            <Plus onClick={()=>{console.log("action")}}/> 
+          </SidebarGroupAction>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to="/sites">
+                    <ChartColumn/>
+                    Uptime
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>     
+      <SidebarSeparator className="m-0"/>
       <SidebarFooter className="mb-1">
         <SidebarMenu>
           <SidebarMenuItem>
