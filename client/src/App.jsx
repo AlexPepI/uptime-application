@@ -13,25 +13,6 @@ function App() {
   const API_BASE_URL = import.meta.env.VITE_API_URL;
   const { getToken } = useAuth();
 
-  useEffect(()=>{
-    
-    const testFetch = async () =>{
-
-      const token = await getToken();
-      const response = await fetch(`${API_BASE_URL}/test`,{
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-      });
-      const json = await response.json();
-      if(response.ok){
-        console.log(json)
-      }
-    }
-
-    testFetch();
-  },[])
-
   return (
     <Router>
       <Routes>

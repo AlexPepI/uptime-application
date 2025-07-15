@@ -1,9 +1,9 @@
+import "dotenv/config";
 import cors from "cors";
-import "dotenv/config"
 import express from "express";
 import sync from "./config/sync.js";
-import testRouter from "./routes/test.js";
 import userRouter from "./user/user.router.js";
+// import uptimeRouter from "./uptime/uptime.router.js";
 import { clerkMiddleware, requireAuth } from '@clerk/express';
 
 const app = express();
@@ -14,9 +14,8 @@ app.use(cors());
 app.use(clerkMiddleware());
 sync();
 
-app.use("/api/test",testRouter)
-
 app.use("/api/user",requireAuth(),userRouter)
+// app.use("/api/uptime",uptimeRouter)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

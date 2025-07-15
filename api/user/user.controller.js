@@ -1,4 +1,4 @@
-import {WhoAmI} from "./user.service.js";
+import {WhoAmI,getAllUsersService,signUpService} from "./user.service.js";
 
 const getUser= async (req,res) => {    
     
@@ -10,5 +10,26 @@ const getUser= async (req,res) => {
     }
 }
 
+const getAllUsers= async (req,res) => {    
+    
+    try {
+        const response = await getAllUsersService(req)
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({msg : error.message})
+    }
+}
 
-export {getUser}
+const signUpUser = async (req,res) => {
+    try {
+        const clerkId = req.body.clerkId
+        const response = await signUpService(clerkId)
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({msg : error.message})
+    }
+}
+
+
+
+export {getUser,signUpUser,getAllUsers}
