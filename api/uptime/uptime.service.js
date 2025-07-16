@@ -1,54 +1,31 @@
-import cron from "node-cron"
+import {Monitor} from "../models/index.js"
+import { scheduleMonitor,runCheck } from "../scheduler/uptimeScheduler.js";
 
-const activeJobs = new Map();
+const UptimeService = async (user_Id, url) => {
+  // 1) enforce max-5-URLs
+  const count = await Monitor.count({ where: { user_Id, active: true } });
+  if (count >= 5) {
+    throw new Error("You can only monitor up to 5 URLs");
+  }
 
-const UptimeService = async (targetUrl) => {
+  // 2) prevent duplicates
+  const exists = await Monitor.findOne({ where: { user_Id, url, active: true } });
+  if (exists) {
+    throw new Error("You’re already monitoring that URL");
+  }
 
-    try {
-        const start = performance.now();
-        const response = await fetch(targetUrl, { 
-            method: 'GET' 
-        });
-        const end = performance.now();
-        const responseTime = Math.round(end - start);
+  // 3) create the monitor
+  const monitor = await Monitor.create({ user_Id, url, active: true });
 
+    runCheck(monitor);
 
-        const job = cron.schedule('*/1 * * * *', async () => {
-            try {
-                const start = performance.now();
-                const response = await fetch(targetUrl, {
-                headers: { 'User-Agent': 'Mozilla/5.0' },
-                redirect: 'follow',
-                });
-                const duration = Math.round(performance.now() - start);
-                console.log(`[UP] ${targetUrl} - ${response.status} - ${duration}ms`);
-            } catch (err) {
-                console.log(`[DOWN] ${targetUrl} - ERROR: ${err.message}`);
-            }
-        });
+    scheduleMonitor(monitor);
 
-        job.start(); 
-        activeJobs.set(targetUrl, job);
-        console.log(activeJobs);
-        return({
-        status:  'up',
-        httpStatus: response.status,
-        responseTime: `${responseTime}ms`
-        });
-    }catch (err) {
-        return({ status: 'down', error: err.message });
-    }
+    return monitor;
 }
 
-const StopCronJobService = async (url) => {
-    const job = activeJobs.get(url);
-    if (!job) return('No job found for this URL' );
-    job.stop();
-    activeJobs.delete(url);
-    console.log(`🛑 Stopped monitoring for ${url}`);
-    return(`Stopped monitoring for ${url}`)
+const StopCronJobService = async (user_Id,url) => {
+
 }
-
-
 
 export {UptimeService,StopCronJobService}

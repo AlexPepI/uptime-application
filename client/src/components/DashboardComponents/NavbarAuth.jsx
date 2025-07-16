@@ -1,4 +1,3 @@
-import {dark} from "@clerk/themes";
 import { Moon,Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
@@ -20,11 +19,7 @@ const NavbarAuth = () => {
                     <Moon className="cursor-pointer" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}/>
                 :
                     <Sun className="cursor-pointer" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}/>}
-            <UserButton
-                appearance={{ 
-                    baseTheme: theme === "dark" ? dark : ""
-                }}  
-            />
+            <UserButton/>
         </div>
     </nav>
     )

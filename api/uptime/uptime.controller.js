@@ -1,21 +1,15 @@
-import { UptimeService,StopCronJobService } from "./uptime.service.js"
+import {User} from "../models/index.js";
+import { WhoAmI } from "../user/user.service.js";
+import { UptimeService,StopCronJobService } from "./uptime.service.js";
 
 const getUptimeResponse= async (req,res) => {
-    const targetUrl = req.query.url;
-    
-    if (!targetUrl) {
-        return res.status(400).json({ error: 'Missing url parameter' });
-    }
-    
-    try {
-        new URL(targetUrl);
-    } catch {
-        return res.status(400).json({ error: 'Invalid URL format' });
-    }
 
     try {
-        const response = await UptimeService(targetUrl)
-        res.status(200).json(response)
+        const targetUrl = req.query.url;
+        const userClerkId = await WhoAmI(req);
+        const userId = await User.findOne({ where: { clerk_Id:userClerkId} })
+        const response = await UptimeService(userId.user_Id,targetUrl)
+        res.status(201).json(response)
     } catch (error) {
         res.status(400).json({msg : error.message})
     }
@@ -34,7 +28,8 @@ const stopCronJob = async (req,res) => {
     }
 
     try {
-        const response = await StopCronJobService(url)
+        const userId = await WhoAmI(req);
+        const response = await StopCronJobService(userId,url)
         res.status(200).json(response)
     } catch (error) {
         res.status(400).json({msg : error.message})

@@ -14,9 +14,9 @@ import {
   SidebarHeader,
   SidebarFooter
 } from "@/components/ui/sidebar"
-import { dark } from "@clerk/themes";
+
 import { UserButton } from "@clerk/clerk-react";
-import { useTheme } from "@/providers/ThemeProvider";
+
 
 const items =[
     {
@@ -37,8 +37,6 @@ const items =[
 ]
 
 const SideBar = () => {
-
-  const { theme } = useTheme();
 
   return (
     <Sidebar>
@@ -92,11 +90,7 @@ const SideBar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton className=" flex cursor-pointer h-10">
-              <UserButton 
-                appearance={{ 
-                    baseTheme: theme === "dark" ? dark : ""
-                }}  
-              />
+              <UserButton/>
               <span className="">Alekos</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
