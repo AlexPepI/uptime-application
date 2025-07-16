@@ -1,27 +1,35 @@
 // scheduler/uptimeScheduler.js
-import { Monitor } from "../models/index.js";
+import { Monitor,Check } from "../models/index.js";
+
 
 const INTERVAL = 5 * 60 * 1000; //change to 5 minutes later
 
 const runCheck = async (monitor) => {
-  const start = Date.now();
-  let status = "up";
+    const start = Date.now();
+    let status = "up";
 
-  // 10s timeout via AbortController
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10_000);
+    // 10s timeout via AbortController
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10_000);
 
-  try {
-    const res = await fetch(monitor.url, { signal: controller.signal });
-    if (res.status >= 500) status = "down";
-  } catch {
-    status = "down";
-  } finally {
-    clearTimeout(timeout);
-  }
+    try {
+        const res = await fetch(monitor.url, { signal: controller.signal });
+        if (res.status >= 500) status = "down";
+    } catch {
+        status = "down";
+    } finally {
+        clearTimeout(timeout);
+    }
 
-  const latency = Date.now() - start;
-  console.log(`[${new Date().toISOString()}] ${monitor.url} → ${status} (${latency}ms)`);
+    const latency = Date.now() - start;
+    console.log(`[${new Date().toISOString()}] ${monitor.url} → ${status} (${latency}ms)`);
+
+    await Check.create({
+    monitorId: monitor.id,
+    status,
+    latency,
+  });
+
 }
 
 const scheduleMonitor = (monitor) => {

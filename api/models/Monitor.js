@@ -28,6 +28,7 @@ const Monitor = sequelize.define("monitor", {
 }, {
   tableName: "monitors",
   timestamps: true,
+
 });
 
 export default Monitor;

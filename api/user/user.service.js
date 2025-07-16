@@ -12,12 +12,18 @@ const getAllUsersService = async () => {
     return(allDatabaseUsers)
 }
 
-const signUpService = async (clerkId) =>{
+const signUpService = async (clerk_Id) =>{
+
+    const exists = await User.findOne({ where: { clerk_Id } });
+    if (exists) {
+        return("Already Signed up")
+    }
+
     await User.create({
-        clerk_Id:clerkId,
+        clerk_Id:clerk_Id,
         sitesMonitoring:0
     })
-    return(`User with clerkId = ${clerkId}, Signed Up to our database`)
+    return(`User with clerkId = ${clerk_Id}, Signed Up to our database`)
 }
 
 export {WhoAmI,signUpService,getAllUsersService}
