@@ -19,41 +19,53 @@ export function AddNewSiteModal() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-                        <Button className="
-                            mr-4
-                            active:bg-custom-accent/80 
-                            transition
-                            cursor-pointer
-                            text-xs
-                            md:text-base
-                            "
-                        >
-                            <CirclePlus/>Add new monitoring
-                        </Button>
+            <Button className="
+                mr-4
+                active:bg-custom-accent/80 
+                transition
+                cursor-pointer
+                text-xs
+                md:text-base
+                "
+            >
+                <CirclePlus/>Create New Monitor
+            </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Add Uptime Check</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              Create a new uptime check by providing the URL you want us to monitor.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
+              <Label htmlFor="new-url" className="cursor-pointer" >URL</Label>
+              <div className="flex items-stretch rounded-3xl border">
+                <span className="inline-flex items-center px-3 text-sm text-gray-500 select-none">
+                  https://
+                </span>
+                <Input
+                  name="new-url"
+                  className="flex-1 border-none focus:ring-0"
+                  placeholder="new-domain.com"
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" className="cursor-pointer">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button 
+            type="submit"
+            className="                            
+                active:bg-custom-accent/80 
+                transition
+                cursor-pointer"
+            >
+                Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </form>

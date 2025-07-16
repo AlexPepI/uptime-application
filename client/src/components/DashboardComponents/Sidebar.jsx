@@ -75,7 +75,7 @@ const SideBar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to="/sites">
+                  <Link to="/console">
                     <ChartColumn/>
                     Uptime
                   </Link>

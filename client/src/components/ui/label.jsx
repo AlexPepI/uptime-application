@@ -5,7 +5,7 @@ export function Label({ htmlFor, className = '', children, ...props }) {
   return (
     <RadixLabel
       htmlFor={htmlFor}
-      className={`block text-sm font-medium text-gray-700 ${className}`}
+      className={`block text-sm font-medium text-gray-700 text-muted-foreground ${className}`}
       {...props}
     >
       {children}

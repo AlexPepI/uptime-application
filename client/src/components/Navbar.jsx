@@ -26,8 +26,8 @@ const Navbar = () => {
                             </>
                             :
                         <>
-                            <Link to="/dashboard">
-                                Dashboard
+                            <Link to="/console">
+                                Console
                             </Link>
                             <li>
                                 <UserButton/>

@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect } from 'react';
-import Sites from './pages/Sites';
+import Console from './pages/Console';
 import HomePage from './pages/Home';
 import SignInPage from './pages/SignIn';
 import SignUpPage from "./pages/SignUp";
@@ -31,7 +31,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage/>}/>
           <Route path="/sign-in" element={<SignInPage/>}/>
           <Route path="/dashboard" element={<DashboardPage/>}/>
-          <Route path="/sites" element={<Sites/>}/> 
+          <Route path="/console" element={<Console/>}/> 
           {/* <Route path="/profile" element={<ProfilePage/>}/>   */}
           <Route path="*" element={<Navigate to="/" replace/>}/> 
       </Routes>

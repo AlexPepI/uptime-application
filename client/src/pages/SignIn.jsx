@@ -9,7 +9,7 @@ const SignInPage = () => {
     <LayoutUnauth>
       <SignIn 
         signUpUrl="/sign-up" 
-        forceRedirectUrl={"/sites"} 
+        forceRedirectUrl={"/console"} 
       />
     </LayoutUnauth>
   )
