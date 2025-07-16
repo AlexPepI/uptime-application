@@ -24,8 +24,22 @@ const UptimeService = async (user_Id, url) => {
     return monitor;
 }
 
-const StopCronJobService = async (user_Id,url) => {
+const StopUptimeService = async (user_Id,url) => {
+
+  // 1) find the active monitor
+  const monitor = await Monitor.findOne({
+    where: { user_Id, url, active: true },
+  });
+  if (!monitor) {
+    throw new Error("No active monitor found for that URL");
+  }
+
+  // 2) mark it inactive
+  monitor.active = false;
+  await monitor.save();
+
+  return { message: "Monitoring stopped", monitor };
 
 }
 
-export {UptimeService,StopCronJobService}
+export {UptimeService,StopUptimeService}
