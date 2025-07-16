@@ -16,9 +16,14 @@ clerkWebhookRouter.post(
       const evt = wh.verify(req.body, req.headers);
 
       if (evt.type === 'user.created') {
-        const clerkId = evt.data.id;
+        const clerk_Id = evt.data.id;
+
+        const exists = await User.findOne({ where: { clerk_Id } });
+        if (exists) {
+          throw new Error("User Already signed UP");
+        }
         await User.create({
-            clerk_Id:clerkId,
+            clerk_Id:clerk_Id,
             sitesMonitoring:0
         })
       }
