@@ -7,7 +7,7 @@ const LayoutAuth = ({children}) => {
     return(
         <SidebarProvider>
             <SideBar/>
-                <main className="w-full">
+                <main className="w-full flex-1 overflow-auto">
                     <NavbarAuth/>            
                     <div className="px-4">
                         {children}
