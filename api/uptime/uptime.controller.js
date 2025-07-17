@@ -1,6 +1,32 @@
-import {User} from "../models/index.js";
+import {User,Monitor,Check} from "../models/index.js";
 import { WhoAmI } from "../user/user.service.js";
 import { UptimeService,StopUptimeService } from "./uptime.service.js";
+
+
+
+const getActiveMonitors = async (req,res) => {
+    try {
+        const userClerkId = await WhoAmI(req);
+        const user = await User.findOne({ where: { clerk_Id:userClerkId} })    
+        const monitors = await Monitor.findAll({ where: { user_Id:user.user_Id, active: true } });
+        const enriched = []
+        for (const m of monitors) {
+            const lastCheck = await Check.findOne({
+                where:    { monitorId: m.id },
+                order:    [['createdAt', 'DESC']],
+                attributes: ['status', 'latency', 'createdAt']
+            })
+            enriched.push({
+                ...m.get({ plain: true }),
+                lastCheck: lastCheck ? lastCheck.get({ plain: true }) : null
+            })
+        }
+        return res.status(200).json(enriched)
+    } catch (error) {
+        res.status(400).json({msg : error.message})
+    }    
+
+}
 
 const getUptimeResponse= async (req,res) => {
 
@@ -32,4 +58,4 @@ const stopCronJob = async (req,res) => {
     }
 }
 
-export {getUptimeResponse,stopCronJob}
+export {getUptimeResponse,stopCronJob,getActiveMonitors}

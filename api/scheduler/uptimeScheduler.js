@@ -1,5 +1,6 @@
 // scheduler/uptimeScheduler.js
 import { Monitor,Check } from "../models/index.js";
+import {io} from "../server.js"
 
 
 const INTERVAL = 5 * 60 * 1000; //change to 5 minutes later
@@ -24,12 +25,20 @@ const runCheck = async (monitor) => {
     const latency = Date.now() - start;
     console.log(`[${new Date().toISOString()}] ${monitor.url} → ${status} (${latency}ms)`);
 
-    await Check.create({
+    const check = await Check.create({
     monitorId: monitor.id,
     status,
     latency,
   });
 
+  io.of('/api/refresh-values')
+    .to(`user:${monitor.user_Id}`)
+    .emit('new-check', {
+      monitorId: monitor.id,
+      status:    check.status,
+      latency:   check.latency,
+      timestamp: check.createdAt,
+  })
 }
 
 const scheduleMonitor = (monitor) => {
