@@ -1,36 +1,92 @@
-import { useEffect } from "react";
+// src/hooks/useMonitors.js
+import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "@clerk/clerk-react";
 
-export function useMonitorSocket(monitorId, onCheck) {
+export const useMonitors = (apiBaseUrl) => {
+  const [monitors, setMonitors] = useState([]);
   const { getToken } = useAuth();
 
   useEffect(() => {
     let socket;
-    (async () => {
-      // 1) get your Clerk session token
-      const token = await getToken();
 
-      // 2) open socket with auth
-      socket = io("http://localhost:3001", {
-        auth: { token },
-        transports: ["websocket"],
-      });
+    const init = async () => {
+      // 1) fetch initial list
+      try {
+        const token = await getToken();
+        const res = await fetch(`${apiBaseUrl}/uptime/active-monitors`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setMonitors(data);
+      } catch (err) {
+        console.error("Error loading monitors:", err);
+        return;
+      }
 
-      socket.on("connect", () => {
-        console.log("WS connected", socket.id);
-      });
+      // 2) connect socket
+      try {
+        const token2 = await getToken();
+        socket = io(`${apiBaseUrl}/refresh-values`, {
+          auth: { token: token2 },
+          transports: ["websocket"],
+        });
 
-      // 3) listen for just your monitor
-      socket.on("monitor:check", msg => {
-        if (msg.monitorId === monitorId) {
-          onCheck(msg);
-        }
-      });
-    })();
+        socket.on("connect_error", (err) =>
+          console.error("WS connect error:", err.message)
+        );
+
+        // 3) handle updates & additions
+        socket.on(
+          "new-check",
+          ({ monitorId, url, status, latency, timestamp }) => {
+            setMonitors((prev) => {
+              const exists = prev.some((mon) => mon.url === url);
+
+              if (exists) {
+                return prev.map((mon) =>
+                  mon.id === monitorId
+                    ? {
+                        ...mon,
+                        lastCheck: {
+                          status,
+                          latency,
+                          createdAt: timestamp,
+                        },
+                      }
+                    : mon
+                );
+              } else {
+                return [
+                  ...prev,
+                  {
+                    id: monitorId,
+                    url,
+                    active: true,
+                    createdAt: timestamp,
+                    lastCheck: {
+                      status,
+                      latency,
+                      createdAt: timestamp,
+                    },
+                  },
+                ];
+              }
+            });
+          }
+        );
+      } catch (err) {
+        console.error("Socket setup failed:", err);
+      }
+    };
+
+    init();
 
     return () => {
-      socket?.disconnect();
+      if (socket) socket.disconnect();
     };
-  }, [monitorId, getToken, onCheck]);
-}
+  }, [apiBaseUrl, getToken]);
+
+  return monitors;
+};

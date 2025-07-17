@@ -1,69 +1,15 @@
 import { Search } from "lucide-react";
-import { io } from "socket.io-client";
 import IsAuth from "@/components/IsAuth";
-import { useState,useEffect } from "react";
-import { useAuth } from "@clerk/clerk-react";
 import { Input } from "@/components/ui/input";
+import { useMonitors } from "@/hooks/useMonitorSocket";
 import { AddNewSiteModal } from "@/components/AddNewSiteModal.jsx";
 import LayoutAuth from "@/components/DashboardComponents/LayoutAuth";
 
 const Console = () => {
 
-
     const API_BASE_URL = import.meta.env.VITE_API_URL;
-    const [monitors, setMonitors] = useState([])
-      const { getToken } = useAuth();
+    const monitors = useMonitors(API_BASE_URL);
 
-  useEffect(()=>{
-    const fetchMonitors = async () =>{
-        const token = await getToken();
-        try {
-            const response = await fetch(`${API_BASE_URL}/uptime/active-monitors`,{
-                headers:{
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        if(!response.ok){
-            throw new Error(`HTTP ${res.status}`)
-        }
-        const json = await response.json();
-        setMonitors(json);
-      } catch (error) {
-        console.error('Error loading monitors:', error)
-      }
-    }
-    fetchMonitors();
-  },[])
-
-  useEffect(()=>{
-    let socket
-    const setupSocket = async () => {
-        try {
-            const token = await getToken();
-            socket = io(`${API_BASE_URL}/refresh-values`, {
-            auth: { token },
-            transports: ['websocket']
-            })
-            socket.on('connect', () =>
-            console.log('WS connected, id=', socket.id)
-            )
-            socket.on('connect_error', err =>
-            console.error('WS connect error:', err.message)
-            )
-            socket.on('new-check', ({ monitorId, status, latency, timestamp }) =>{
-                console.log({ monitorId, status, latency, timestamp })
-            })
-        } catch (error) {
-            console.error('Socket setup failed:', error)
-        }    
-    }
-    setupSocket()
-  },[])
-
-
-
-
-    
     return(
         <IsAuth>
             <LayoutAuth>
@@ -83,17 +29,32 @@ const Console = () => {
                         <AddNewSiteModal />
                     </div>
                     <div className="border-1 h-8/10">
-                        {monitors.map((m, i) => {
-                            const chk = m.lastCheck
-                            return (
-                                <div key={m.id || i} className="py-2 border-b">
-                                    <strong>{m.url}</strong> is <em>{chk?.status || '—'}</em> in {chk?.latency ?? '—'}ms at{' '}
-                                    {chk
-                                    ? new Date(chk.createdAt).toLocaleString()
-                                    : 'no checks yet'}
-                                </div>
-                            )
-                        })}
+                         <table>
+        <thead>
+          <tr>
+            <th>URL</th>
+            <th>Active</th>
+            <th>Status</th>
+            <th>Latency (ms)</th>
+            <th>Last Checked</th>
+          </tr>
+        </thead>
+        <tbody>
+          {monitors.map(mon => (
+            <tr key={mon.id}>
+              <td>{mon.url}</td>
+              <td>{mon.active ? "✅" : "❌"}</td>
+              <td>{mon.lastCheck?.status ?? "—"}</td>
+              <td>{mon.lastCheck?.latency ?? "—"}</td>
+              <td>
+                {mon.lastCheck
+                  ? new Date(mon.lastCheck.createdAt).toLocaleTimeString()
+                  : "—"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
                     </div>
                 </div>
             </div>   

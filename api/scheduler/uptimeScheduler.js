@@ -35,6 +35,7 @@ const runCheck = async (monitor) => {
     .to(`user:${monitor.user_Id}`)
     .emit('new-check', {
       monitorId: monitor.id,
+      url : monitor.url,
       status:    check.status,
       latency:   check.latency,
       timestamp: check.createdAt,
