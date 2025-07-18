@@ -88,5 +88,5 @@ export const useMonitors = (apiBaseUrl) => {
     };
   }, [apiBaseUrl, getToken]);
 
-  return monitors;
+  return {monitors,setMonitors};
 };

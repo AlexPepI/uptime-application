@@ -2,13 +2,14 @@ import { Search } from "lucide-react";
 import IsAuth from "@/components/IsAuth";
 import { Input } from "@/components/ui/input";
 import { useMonitors } from "@/hooks/useMonitorSocket";
+import MonitoringDropdown from "@/components/monitoringDropdown"; 
 import { AddNewSiteModal } from "@/components/AddNewSiteModal.jsx";
 import LayoutAuth from "@/components/DashboardComponents/LayoutAuth";
 
 const Console = () => {
 
     const API_BASE_URL = import.meta.env.VITE_API_URL;
-    const monitors = useMonitors(API_BASE_URL);
+    const {monitors,setMonitors} = useMonitors(API_BASE_URL);
 
     return(
         <IsAuth>
@@ -37,6 +38,7 @@ const Console = () => {
             <th>Status</th>
             <th>Latency (ms)</th>
             <th>Last Checked</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -50,6 +52,9 @@ const Console = () => {
                 {mon.lastCheck
                   ? new Date(mon.lastCheck.createdAt).toLocaleTimeString()
                   : "—"}
+              </td>
+              <td>
+                  <MonitoringDropdown id={mon.id} url={mon.url} apiBaseUrl={API_BASE_URL} setMonitors={setMonitors}/>
               </td>
             </tr>
           ))}

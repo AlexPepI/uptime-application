@@ -32,8 +32,6 @@ const getUptimeResponse= async (req,res) => {
 
     try {
         const targetUrl = req.body.url;
-        // console.log(req.body)
-        // console.log(targetUrl)
         const userClerkId = await WhoAmI(req);
         const userId = await User.findOne({ where: { clerk_Id:userClerkId} })
         const response = await UptimeService(userId.user_Id,targetUrl)
@@ -64,4 +62,30 @@ const stopCronJob = async (req,res) => {
     }
 }
 
-export {getUptimeResponse,stopCronJob,getActiveMonitors}
+const getMonitorsChecks = async  (req,res) => {
+    try {
+        const userClerkId = await WhoAmI(req);
+        const user = await User.findOne({ where: { clerk_Id:userClerkId} })
+        const { id: monitorId } = req.params;
+        const monitor = await Monitor.findOne({
+            where: {
+                id: monitorId,
+                user_Id: user.user_Id
+            }
+        });
+        if (!monitor) {
+            return res.status(403).json({ msg: 'Forbidden' });
+        }
+        const last15Checks = await Check.findAll({
+            where: { monitorId },
+            order: [['createdAt', 'DESC']],
+            limit: 15
+        });
+        res.status(200).json(last15Checks)        
+    } catch (error) {
+        res.status(500).json({msg : error.message})
+    }
+}
+
+
+export {getUptimeResponse,stopCronJob,getActiveMonitors,getMonitorsChecks}

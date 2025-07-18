@@ -14,6 +14,16 @@ const UptimeService = async (user_Id, url) => {
     throw new Error("You’re already monitoring that URL");
   }
 
+  const deactivated = await Monitor.findOne({ where: { user_Id, url, active: false } });
+  if (deactivated) {
+    deactivated.active = true;
+    await deactivated.save();
+    runCheck(deactivated);
+    scheduleMonitor(deactivated);
+    return deactivated;
+  }
+
+
   // 3) create the monitor
   const monitor = await Monitor.create({ user_Id, url, active: true });
 
@@ -33,13 +43,15 @@ const StopUptimeService = async (user_Id,url) => {
   if (!monitor) {
     throw new Error("No active monitor found for that URL");
   }
-
   // 2) mark it inactive
   monitor.active = false;
   await monitor.save();
-
   return { message: "Monitoring stopped", monitor };
+}
+
+const GetChecksService = async (monitorId) => {
 
 }
 
-export {UptimeService,StopUptimeService}
+
+export {UptimeService,StopUptimeService,GetChecksService}

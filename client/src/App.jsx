@@ -14,15 +14,15 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 function App() {
 
   //For Backend Testing // Delete
-  // const { getToken } = useAuth();
-  //   const token = async ()=>{
-  //     const token = await getToken();
-  //     console.log(token);
-  //   }
-  //   token();
-  // useEffect(()=>{
+  const { getToken } = useAuth();
+    const token = async ()=>{
+      const token = await getToken();
+      console.log(token);
+    }
+    token();
+  useEffect(()=>{
 
-  // },[])
+  },[])
 
   return (
     <Router>
@@ -30,7 +30,7 @@ function App() {
           <Route path='/' element={<HomePage/>}/>
           <Route path="/sign-up" element={<SignUpPage/>}/>
           <Route path="/sign-in" element={<SignInPage/>}/>
-          <Route path="/dashboard" element={<DashboardPage/>}/>
+          <Route path="/dashboard/:id" element={<DashboardPage/>}/>
           <Route path="/console" element={<Console/>}/> 
           {/* <Route path="/profile" element={<ProfilePage/>}/>   */}
           <Route path="*" element={<Navigate to="/" replace/>}/> 
