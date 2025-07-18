@@ -1,4 +1,5 @@
-import { useState,useCallback   } from "react"
+import { useState   } from "react"
+import { useAuth } from "@clerk/clerk-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -16,13 +17,34 @@ import { CirclePlus } from "lucide-react"
 
 export function AddNewSiteModal() {
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [url,setUrl] = useState("");
   const [open,setOpen] = useState(false);
 
-  function onSubmit(e) {
+  const {getToken} = useAuth();
+
+  async function onSubmit(e) {
     e.preventDefault();
     const normalized = `https://${url}`
-    console.log("Monitoring:", normalized);
+    try {
+      const token = await getToken();
+      const response = await fetch(`${API_BASE_URL}/uptime/url`,{
+        method: "POST",
+        headers:{
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ url: normalized })
+      });
+      const json = await response.json();
+      if(!response.ok){
+        console.log(json.msg); //set alert = json.msg
+        return;
+      }
+      console.log(json) //Succeed Tick etc
+    } catch (error) {
+      console.error("Error :", error);
+    }
     setOpen(false)
   }
 
