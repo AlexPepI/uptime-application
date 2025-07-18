@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LayoutAuth from '@/components/DashboardComponents/LayoutAuth';
-
+import AreaChartResponseTime from '@/components/DashboardComponents/AreaChartResponseTime';
 
 const DashboardPage = () => {
   const { id } = useParams();
@@ -29,7 +29,6 @@ const DashboardPage = () => {
           return;
         }
         const data = await res.json();
-        console.log(data)
         setPayload(data);
       } catch (err) {
         console.error(err);
@@ -49,7 +48,12 @@ const DashboardPage = () => {
   return (
     <IsAuth>
         <LayoutAuth>
-            Welcome to dashboard
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-[8vh]'>
+              <div className='bg-primary-foreground p-4 rounded-3xl'>Test</div>
+              <div className='bg-primary-foreground p-4 rounded-3xl'>Test</div>
+              <div className='bg-primary-foreground p-4 rounded-3xl'>Test</div>
+              <div className='p-4 rounded-3xl md:col-span-3'><AreaChartResponseTime payload={payload} /></div>
+            </div>
         </LayoutAuth>
     </IsAuth>
   );

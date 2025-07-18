@@ -76,11 +76,12 @@ const getMonitorsChecks = async  (req,res) => {
         if (!monitor) {
             return res.status(403).json({ msg: 'Forbidden' });
         }
-        const last15Checks = await Check.findAll({
+        const last15ChecksReversed = await Check.findAll({
             where: { monitorId },
             order: [['createdAt', 'DESC']],
             limit: 15
         });
+        const last15Checks = last15ChecksReversed.reverse();
         res.status(200).json(last15Checks)        
     } catch (error) {
         res.status(500).json({msg : error.message})
