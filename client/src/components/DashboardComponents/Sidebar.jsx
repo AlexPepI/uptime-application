@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { Home,Inbox,Calendar,Plus,ChartColumn } from "lucide-react";
+import { Link,useNavigate } from "react-router-dom";
+import { Home,Inbox,Plus,ChartColumn } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -15,7 +15,7 @@ import {
   SidebarFooter
 } from "@/components/ui/sidebar"
 
-import { UserButton } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 
 const items =[
@@ -28,15 +28,13 @@ const items =[
         title:"Inbox",
         url:"/",
         icon: Inbox
-    },
-    {
-        title:"Calendar",
-        url:"/",
-        icon: Calendar
     }
 ]
 
 const SideBar = () => {
+
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   return (
     <Sidebar>
@@ -69,7 +67,7 @@ const SideBar = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Monitoring</SidebarGroupLabel>
           <SidebarGroupAction>
-            <Plus onClick={()=>{console.log("action")}}/> 
+            <Plus onClick={()=>{navigate("/console")}}/> 
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -90,8 +88,16 @@ const SideBar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton className=" flex cursor-pointer h-10">
-              <UserButton/>
-              <span className="">Alekos</span>
+              <img
+                src={user.imageUrl}
+                alt={user.fullName}
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                }}
+              />
+              <span className="">{user.fullName}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

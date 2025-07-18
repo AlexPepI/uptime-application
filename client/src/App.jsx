@@ -14,15 +14,15 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 function App() {
 
   //For Backend Testing // Delete
-  const { getToken } = useAuth();
-    const token = async ()=>{
-      const token = await getToken();
-      console.log(token);
-    }
-    token();
-  useEffect(()=>{
+  // const { getToken } = useAuth();
+  //   const token = async ()=>{
+  //     const token = await getToken();
+  //     console.log(token);
+  //   }
+  //   token();
+  // useEffect(()=>{
 
-  },[])
+  // },[])
 
   return (
     <Router>

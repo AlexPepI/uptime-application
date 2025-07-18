@@ -28,11 +28,9 @@ export default function AreaChartResponseTime({payload}) {
     latency: check.latency,
     timestamp: new Date(check.createdAt).toLocaleTimeString()
     }));
-  
-    console.log(chartData)
     return (
 
-      <Card className="flex flex-col h-96">
+      <Card className="flex flex-col h-96 ">
         <CardHeader>
           <CardTitle>Response Time</CardTitle>
           <CardDescription>Last 15 uptime checks — response time in milliseconds</CardDescription>
@@ -47,9 +45,9 @@ export default function AreaChartResponseTime({payload}) {
               <Area
                 dataKey="latency"            // ← use "latency" here
                 type="natural"
-                fill="var(--custom-accent)"
+                fill="var(--custom-chart-green)"
                 fillOpacity={0.4}
-                stroke="var(--custom-accent)"
+                stroke="var(--chart-stroke)"
               />
             </AreaChart>
           </ChartContainer>

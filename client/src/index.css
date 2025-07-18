@@ -54,6 +54,8 @@ button {
   --sidebar-ring: oklch(0.708 0 0);
   --custom-accent: #f97316;
   --custom-accent-fg: #ffffff;
+  --custom-chart-green: rgba(16, 185, 129, 0.3);
+  --chart-stroke: #10B981;
 }
 
 @theme inline {
@@ -94,6 +96,8 @@ button {
   --color-sidebar-ring: var(--sidebar-ring);
   --color-custom-accent: var(--custom-accent);
   --color-custom-accent-foreground: var(--custom-accent-fg);
+  --color-custom-chart-green:var(--custom-chart-green);
+  --color-custom-chart-stroke:var(--chart-stroke)
 }
 
 .dark {
@@ -130,6 +134,8 @@ button {
   --sidebar-ring: oklch(0.556 0 0);
   --custom-accent: #fb923c;
   --custom-accent-fg: #1f2937;
+  --custom-chart-green: rgba(72, 187, 120, 0.3);
+  --chart-stroke: #10B981;
 }
 
 @layer base {

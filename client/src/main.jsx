@@ -3,6 +3,7 @@ import App from './App.jsx'
 import { dark } from '@clerk/themes'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Loader } from './components/Loader.jsx'
 import { ThemeProvider } from './providers/ThemeProvider'
 import { useTheme } from "@/providers/ThemeProvider";
 import { ClerkProvider,ClerkLoaded,ClerkLoading } from '@clerk/clerk-react'
@@ -28,7 +29,7 @@ const Root = () => {
         <ClerkLoading>
             <div className='h-screen'>
               <div className="flex items-center justify-center h-full">
-                LOADING ...
+                 <Loader size={60} color="#ff6b6b" />
               </div>
             </div>
         </ClerkLoading>
