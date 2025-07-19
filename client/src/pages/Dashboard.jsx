@@ -2,6 +2,8 @@ import IsAuth from '@/components/IsAuth';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { Loader } from '@/components/Loader';
+import { Indicator } from '@/components/Indicator';
+import { UptimeBars } from '@/components/DashboardComponents/UptimeBars';
 import { useParams, useNavigate } from 'react-router-dom';
 import LayoutAuth from '@/components/DashboardComponents/LayoutAuth';
 import CardComponent from '@/components/DashboardComponents/CardComponent';
@@ -47,15 +49,40 @@ const DashboardPage = () => {
     </div>
   )
 
+    const statuses1 = [
+    'up','up','up','up','up','up','up',
+    'up','up','down','up','up','up','up','up'
+
+  ];
+
+  // Example 2: derive from a percentage
+  const percent = 87; // e.g. 87% uptime
+  const totalBars = 24;
+  const upCount = Math.round((percent / 100) * totalBars);
+  const statuses2 = Array.from({ length: totalBars }, (_, i) =>
+    i < upCount ? 'up' : 'down'
+  );
+
+
   return (
     <IsAuth>
         <LayoutAuth>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-[5vh]'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-[5vh]'>
               <div className='p-4 rounded-3xl'>
                 <CardComponent
                 title="Current Status"
                 
-                footer={<span>Currently up for : 3 months and 21 days</span>}
+                footer={<span>Up for : 3 months and 21 days</span>}
+                className="p-4 rounded-3xl "
+                >
+                  <Indicator size={50} color="#4caf50" duration={1.2}/>
+                  Test
+                </CardComponent>
+              </div>
+              <div className='p-4 rounded-3xl'>
+                <CardComponent
+                title="Last Check"
+                footer={<span>Average Today: 1125 ms</span>}
                 className="p-4 rounded-3xl "
                 >
                   Test
@@ -63,25 +90,14 @@ const DashboardPage = () => {
               </div>
               <div className='p-4 rounded-3xl'>
                 <CardComponent
-                title="Response Time"
-                description="Last 15 uptime checks — response time in ms"
+                title="Last 15 values"
                 footer={<span>Average Today: 1125 ms</span>}
                 className="p-4 rounded-3xl "
                 >
-                  Test
-                </CardComponent>
-              </div>
-              <div className='p-4 rounded-3xl '>
-                <CardComponent
-                title="Response Time"
-                description="Last 15 uptime checks — response time in ms"
-                footer={<span>Average Today: 1125 ms</span>}
-                className="p-4 rounded-3xl "
-                >
-                  Test
+                    <UptimeBars statuses={statuses1} gap={3} />
                 </CardComponent>                
               </div>
-              <div className='p-4 rounded-3xl md:col-span-3'><AreaChartResponseTime payload={payload} /></div>
+              <div className='p-4 rounded-3xl md:col-span-2 lg:col-span-3'><AreaChartResponseTime payload={payload} /></div>
             </div>
         </LayoutAuth>
     </IsAuth>

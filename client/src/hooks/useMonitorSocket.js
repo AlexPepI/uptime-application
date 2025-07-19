@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import { useAuth } from "@clerk/clerk-react";
 
 export const useMonitors = (apiBaseUrl) => {
-  const [monitors, setMonitors] = useState([]);
+  const [monitors, setMonitors] = useState();
   const { getToken } = useAuth();
 
   useEffect(() => {

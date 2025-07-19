@@ -1,25 +1,30 @@
 import React from 'react';
 
 export function Indicator({
-  size = 48,          // overall diameter in px
-  color = '#37c77f',  // dot & ring color
-  duration = 1.5,     // seconds per ripple
+  size = 48,           // overall diameter in px
+  color = '#37c77f',   // dot & ring color
+  duration = 1.5,      // seconds per ripple
+  ringScale = 0.8,     // initial ring size as a fraction of overall
+  maxScale = 1,        // maximum expansion relative to initial ring size
 }) {
-  const dotSize = size * 0.4; // inner dot is 40% of overall
+  const dotSize = size * 0.4;
+  const ringSize = size * ringScale;
+  const ringOffset = (size - ringSize) / 2;
 
   const wrapperStyle = {
     position: 'relative',
     width: size,
     height: size,
     display: 'inline-block',
+    overflow: 'hidden',    // hide overflow beyond wrapper
   };
 
   const ringStyle = {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    width: size,
-    height: size,
+    top: ringOffset,
+    left: ringOffset,
+    width: ringSize,
+    height: ringSize,
     borderRadius: '50%',
     backgroundColor: color,
     opacity: 0.4,
@@ -46,21 +51,11 @@ export function Indicator({
         <div style={dotStyle} />
       </div>
       <style>
-        {`
-          @keyframes ripple {
-            0% {
-              transform: scale(0);
-              opacity: 0.4;
-            }
-            80% {
-              opacity: 0.15;
-            }
-            100% {
-              transform: scale(1.5);
-              opacity: 0;
-            }
-          }
-        `}
+        {`@keyframes ripple {
+            0%   { transform: scale(0); opacity: 0.4; }
+            80%  { opacity: 0.15; }
+            100% { transform: scale(${maxScale}); opacity: 0; }
+          }`}
       </style>
     </>
   );

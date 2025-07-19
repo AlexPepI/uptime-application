@@ -6,9 +6,11 @@ export function Loader({ size = 48, color = '#1e90ff' }) {
     width: size,
     height: size,
     border: `${borderSize}px solid rgba(0,0,0,0.1)`,
+    borderColor:"var(--background)",
     borderTopColor: color,
     borderRadius: '50%',
     animation: 'spin 0.8s ease infinite',
+    backgroundColor:"var(--background)"
   };
 
   return (

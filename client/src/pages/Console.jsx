@@ -1,9 +1,9 @@
 import { Search } from "lucide-react";
 import IsAuth from "@/components/IsAuth";
+import { Loader } from "@/components/Loader";
 import { Input } from "@/components/ui/input";
 import { useMonitors } from "@/hooks/useMonitorSocket";
 import MonitoringDropdown from "@/components/monitoringDropdown"; 
-import { Loader } from "@/components/Loader";
 import { AddNewSiteModal } from "@/components/AddNewSiteModal.jsx";
 import LayoutAuth from "@/components/DashboardComponents/LayoutAuth";
 
@@ -12,9 +12,7 @@ const Console = () => {
     const API_BASE_URL = import.meta.env.VITE_API_URL;
     const {monitors,setMonitors} = useMonitors(API_BASE_URL);
 
-
-
-      if (!monitors[0]) return(
+      if (!monitors) return(
     <div className='h-screen'>
       <div className="flex items-center justify-center h-full">
           <Loader size={60} color="#ff6b6b" /> 
@@ -53,7 +51,7 @@ const Console = () => {
           </tr>
         </thead>
         <tbody>
-          {monitors.map(mon => (
+          {monitors && monitors.map(mon => (
             <tr key={mon.id}>
               <td>{mon.url}</td>
               <td>{mon.active ? "✅" : "❌"}</td>

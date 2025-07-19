@@ -6,8 +6,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Indicator } from "../Indicator";
-
 import React from 'react';
 
 const CardComponent = ({
@@ -25,7 +23,12 @@ const CardComponent = ({
           {description && <CardDescription>{description}</CardDescription>}
         </CardHeader>
       )}
-      <CardContent><Indicator size={50} color="#4caf50" duration={1.2}/>{children}</CardContent>
+      <CardContent>
+      <div className="border-1 flex items-center">
+        
+        {children}
+      </div>
+      </CardContent>
       {footer && <CardFooter className="text-muted-foreground">{footer}</CardFooter>}
     </Card>
   );
