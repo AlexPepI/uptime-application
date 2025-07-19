@@ -15,7 +15,7 @@ export function MonitorsTable({ API_BASE_URL,monitors, setMonitors }) {
             <TableHead className="w-[18%]">Status</TableHead>
             <TableHead className="w-[18%]">Latency (ms)</TableHead>
             <TableHead className="w-[18%]">Last Checked</TableHead>
-            <TableHead className="w-[18%] text-center">Actions</TableHead>
+            <TableHead className="w-[18%] text-center"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

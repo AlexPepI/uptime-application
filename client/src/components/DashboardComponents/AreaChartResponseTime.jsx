@@ -22,7 +22,7 @@ const chartConfig = {
 } 
 
 
-export default function AreaChartResponseTime({payload}) {
+export default function AreaChartResponseTime({color,numberOfValues,payload}) {
 
     const chartData = payload.map(check => ({
     latency: check.latency,
@@ -33,7 +33,7 @@ export default function AreaChartResponseTime({payload}) {
       <Card className="flex flex-col h-96 ">
         <CardHeader>
           <CardTitle>Response Time</CardTitle>
-          <CardDescription>Last 15 uptime checks — response time in milliseconds</CardDescription>
+          <CardDescription>Last {numberOfValues} uptime checks — response time in milliseconds</CardDescription>
         </CardHeader>
         <CardContent className="flex justify-center flex-1 p-0 min-h-0 overflow-hidden">
             <ChartContainer config={chartConfig} className="h-full w-[98%]">
@@ -45,9 +45,9 @@ export default function AreaChartResponseTime({payload}) {
               <Area
                 dataKey="latency"            // ← use "latency" here
                 type="natural"
-                fill="var(--custom-chart-green)"
+                fill={color}
                 fillOpacity={0.4}
-                stroke="var(--chart-stroke)"
+                stroke={color}
               />
             </AreaChart>
           </ChartContainer>
@@ -55,7 +55,7 @@ export default function AreaChartResponseTime({payload}) {
         <CardFooter>
           <div className="flex flex-col gap-1 text-sm">
             <span className="font-medium flex items-center gap-1">
-              Average Today 
+              Average 
             </span>
             <span className="text-muted-foreground">1125 ms</span>
           </div>
