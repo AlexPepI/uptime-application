@@ -13,6 +13,7 @@ const MonitoringDropdown = ({ id, url, apiBaseUrl, setMonitors }) => {
     const navigate = useNavigate();
     const {getToken} =useAuth();
     const onStop = async (url) => {
+
         try {
             const token = await getToken();
             const res = await fetch(
@@ -41,10 +42,11 @@ const MonitoringDropdown = ({ id, url, apiBaseUrl, setMonitors }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-         <DropdownMenuItem onSelect={() => navigate(`/dashboard/${id}`)} > {/*  */}
+         <DropdownMenuItem className="cursor-pointer" onSelect={() => navigate(`/dashboard/${id}`)} > {/*  */}
           Details
         </DropdownMenuItem>
         <DropdownMenuItem
+          className="cursor-pointer"
           onSelect={() => {
             onStop(url);
           }}

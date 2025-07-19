@@ -14,18 +14,24 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CirclePlus } from "lucide-react"
+import { OverlayLoader } from "./OverlayLoader"
+import { FetchAlert } from "./DashboardComponents/FetchAlert"
 
 export function AddNewSiteModal() {
 
   const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [url,setUrl] = useState("");
   const [open,setOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const {getToken} = useAuth();
 
   async function onSubmit(e) {
     e.preventDefault();
     const normalized = `https://${url}`
+    setLoading(true);
+    setError(null)
     try {
       const token = await getToken();
       const response = await fetch(`${API_BASE_URL}/uptime/url`,{
@@ -38,17 +44,20 @@ export function AddNewSiteModal() {
       });
       const json = await response.json();
       if(!response.ok){
-        console.log(json.msg); //set alert = json.msg
+        setError(json.msg); //set alert = json.msg
         return;
       }
       console.log(json) //Succeed Tick etc
     } catch (error) {
-      console.error("Error :", error);
-    }
+      console.log("Error :", error);
+    }finally {
+        setLoading(false)
+      }
     setOpen(false)
   }
 
   return (
+  
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
           <Button className="
@@ -63,9 +72,11 @@ export function AddNewSiteModal() {
               <CirclePlus/>Create New Monitor
           </Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={onSubmit}>
-        <DialogHeader>
+          <OverlayLoader loading={loading}>
+        <DialogHeader >
           <DialogTitle>Add Uptime Check</DialogTitle>
           <DialogDescription>
             Create a new uptime check by providing the URL you want us to monitor.
@@ -85,6 +96,11 @@ export function AddNewSiteModal() {
                 onChange={(e) => setUrl(e.target.value)}
               />
             </div>
+            {error && (
+        <FetchAlert
+          error={error}
+        />
+      )}
           </div>
         </div>
         <DialogFooter className="mt-6">
@@ -101,8 +117,10 @@ export function AddNewSiteModal() {
               Save changes
           </Button>
         </DialogFooter>
+        </OverlayLoader>
         </form>
       </DialogContent>
+
     </Dialog>
   )
 }
