@@ -44,7 +44,7 @@ const DashboardPage = () => {
   if (!payload) return(
     <div className='h-screen'>
       <div className="flex items-center justify-center h-full">
-          <Loader size={60} color="#ff6b6b" /> 
+          <Loader size={60} color="var(--custom-accent)" /> 
         </div>
     </div>
   )
@@ -67,13 +67,13 @@ const DashboardPage = () => {
   return (
     <IsAuth>
         <LayoutAuth>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-[5vh]'>
+            <div className='grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-4 mt-[5vh]'>
               <div className='p-4 rounded-3xl'>
                 <CardComponent
                 title="Current Status"
                 
                 footer={<span>Up for : 3 months and 21 days</span>}
-                className="p-4 rounded-3xl "
+                className="p-4 rounded-3xl h-[100%] min-w-[230px]"
                 >
                   <Indicator size={50} color="#4caf50" duration={1.2}/>
                   Test
@@ -83,7 +83,7 @@ const DashboardPage = () => {
                 <CardComponent
                 title="Last Check"
                 footer={<span>Average Today: 1125 ms</span>}
-                className="p-4 rounded-3xl "
+                className="p-4 rounded-3xl h-[100%] min-w-[230px]"
                 >
                   Test
                 </CardComponent>
@@ -92,12 +92,12 @@ const DashboardPage = () => {
                 <CardComponent
                 title="Last 15 values"
                 footer={<span>Average Today: 1125 ms</span>}
-                className="p-4 rounded-3xl "
+                className="p-4 rounded-3xl h-[100%] min-w-[230px]"
                 >
                     <UptimeBars statuses={statuses1} gap={3} />
                 </CardComponent>                
               </div>
-              <div className='p-4 rounded-3xl md:col-span-2 lg:col-span-3'><AreaChartResponseTime payload={payload} /></div>
+              <div className='p-4 rounded-3xl sm:col-span-2 lg:col-span-3'><AreaChartResponseTime payload={payload} /></div>
             </div>
         </LayoutAuth>
     </IsAuth>

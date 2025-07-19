@@ -24,7 +24,7 @@ const CardComponent = ({
         </CardHeader>
       )}
       <CardContent>
-      <div className="border-1 flex items-center">
+      <div className="flex items-center h-[40px]">
         
         {children}
       </div>

@@ -29,7 +29,7 @@ const Root = () => {
         <ClerkLoading>
             <div className='h-screen'>
               <div className="flex items-center justify-center h-full">
-                 <Loader size={60} color="#ff6b6b" />
+                 <Loader size={60} color="var(--custom-accent)" />
               </div>
             </div>
         </ClerkLoading>
