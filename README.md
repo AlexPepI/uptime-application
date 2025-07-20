@@ -33,7 +33,7 @@ cd uptime-application
 
 # Launch containers in development mode
 docker-compose -f docker-compose.dev.yml --project-name uptime-dev up --build
-
+``` 
 ## Configuration
 
 ### Client (`client/.env`)
@@ -41,11 +41,11 @@ Create a .env file inside the client folder with the following variables:
 ```env
 VITE_API_URL=/api
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_****
-
+```
 ### API (`api/.env.dev`)
 Create a .env.dev file inside the client folder with the following variables:
 ```env.dev
 DATABASE_URL=postgres://postgres:postgres@postgres-dev:5432/uptime
 CLERK_PUBLISHABLE_KEY=pk_test_****
 CLERK_SECRET_KEY=sk_test_****
-
+```
