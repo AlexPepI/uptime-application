@@ -1,6 +1,6 @@
 # Peps Monitor
 
-*A platform where users sign up/log in and can uptime monitor URLs at 5‑minute intervals.* This project is hosted on [PepsMonitor](https://pepsmonitor.com/).
+*A platform where users sign up/log in and can uptime monitor URLs at 5‑minute intervals.This project is hosted on [PepsMonitor](https://pepsmonitor.com/).*  
 
 ## Table of Contents
 

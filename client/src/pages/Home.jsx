@@ -25,7 +25,7 @@ const HomePage = () => {
         <LayoutUnauth>
             <div className="flex flex-col">
         <SplitText
-            text="Keep Your Services Up & Running!"
+            text={`Keep Your Services Up & Running!`}
             className="text-xl md:text-4xl xl:text-6xl font-bold text-center text-white mb-[2rem]"                
             duration={1}
             delay={10}
@@ -38,7 +38,12 @@ const HomePage = () => {
             textAlign="center"
         />
                 <SplitText
-            text="Monitor up to 5 URLs every 5 minutes with real‑time updates and historical charts."
+              text={
+    <>
+      Monitor up to 5 URLs every 5 minutes<br/>
+      with real‑time updates and historical charts.
+    </>
+              }
             className=" text-xs md:text-xl xl:text-3xl text-center text-white mb-[2rem]"                
             duration={1}
             delay={10}
