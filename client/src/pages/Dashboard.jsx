@@ -69,6 +69,7 @@ const DashboardPage = () => {
 
         // 3) handle updates & additions
         socket.on("new-check", ({ monitorId, url, status, latency, timestamp }) => {
+          
   setPayload(prev => {
     const next = [...prev.slice(1), { monitorId, url, status, latency, createdAt: timestamp }];
     

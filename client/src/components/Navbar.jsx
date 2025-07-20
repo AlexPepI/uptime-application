@@ -12,21 +12,21 @@ const Navbar = () => {
         <div className="rounded-b-xl">
             <ul className="flex justify-between py-4 px-6">
                 <div>
-                    <Link to="/">Home</Link>
+                    <Link className="text-white" to="/">Home</Link>
                 </div>
                 <div className="flex gap-6 items-center">
                     {!userId?
                         <>
-                            <Link to="/sign-in">
+                            <Link className="text-white" to="/sign-in">
                                 Sign In
                             </Link>
-                            <Link to="/sign-up">
+                            <Link className="text-white" to="/sign-up">
                                 Sign Up
                             </Link>
                             </>
                             :
                         <>
-                            <Link to="/console">
+                            <Link className="text-white" to="/console">
                                 Console
                             </Link>
                             <li>
