@@ -1,17 +1,14 @@
 # Peps Monitor
 
-*A platform where users sign up/log in and can uptime monitor up to 5 URLs at 5‑minute intervals.*
+*A platform where users sign up/log in and can uptime monitor URLs at 5‑minute intervals.*
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+
 
 ## Introduction
 
@@ -36,3 +33,19 @@ cd uptime-application
 
 # Launch containers in development mode
 docker-compose -f docker-compose.dev.yml --project-name uptime-dev up --build
+
+## Configuration
+
+### Client (`client/.env`)
+Create a .env file inside the client folder with the following variables:
+```env
+VITE_API_URL=/api
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_****
+
+### API (`api/.env.dev`)
+Create a .env.dev file inside the client folder with the following variables:
+```env.dev
+DATABASE_URL=postgres://postgres:postgres@postgres-dev:5432/uptime
+CLERK_PUBLISHABLE_KEY=pk_test_****
+CLERK_SECRET_KEY=sk_test_****
+
