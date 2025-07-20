@@ -22,7 +22,7 @@ const chartConfig = {
 } 
 
 
-export default function AreaChartResponseTime({color,numberOfValues,payload}) {
+export default function AreaChartResponseTime({color,average,numberOfValues,payload}) {
 
     const chartData = payload.map(check => ({
     latency: check.latency,
@@ -57,7 +57,7 @@ export default function AreaChartResponseTime({color,numberOfValues,payload}) {
             <span className="font-medium flex items-center gap-1">
               Average 
             </span>
-            <span className="text-muted-foreground">1125 ms</span>
+            <span className="text-muted-foreground">{average} ms</span>
           </div>
         </CardFooter>
       </Card>

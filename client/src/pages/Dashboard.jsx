@@ -2,6 +2,7 @@ import IsAuth from '@/components/IsAuth';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { Loader } from '@/components/Loader';
+import { io } from 'socket.io-client';
 import { Indicator } from '@/components/Indicator';
 import { UptimeBars } from '@/components/DashboardComponents/UptimeBars';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -18,6 +19,7 @@ const DashboardPage = () => {
   const [statuses,setStatuses] = useState([]);
   const [relative,setRelative] = useState("");
   const [next,setNext] = useState("");
+  const [average,setAverage] = useState("");
   const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const DashboardPage = () => {
     }
     
     (async () => {
+    
       try {
         const token = await getToken();
         const res = await fetch(`${API_BASE_URL}/uptime/monitor/${id}`, {
@@ -40,17 +43,66 @@ const DashboardPage = () => {
         const statuses = data.map(data => data.status)
         setStatuses(statuses);
         setPayload(data);
+        setAverage(Math.round(data.reduce((sum, {latency}) => sum + latency, 0) / data.length));
         const lastCheckedAt = new Date(data.at(-1).createdAt);
         const nextCheck = addMinutes(lastCheckedAt,5);
         setNext(formatDistanceToNowStrict(nextCheck), {
-    addSuffix: true,
-    roundingMethod: 'ceil',
-  })
+        addSuffix: true,
+        roundingMethod: 'ceil',
+        })
         setRelative(formatDistanceToNow(lastCheckedAt, { addSuffix: true }) )
       } catch (err) {
         console.error(err);
         navigate('/console');
       }
+       try {
+
+        const token2 = await getToken();
+        const socket = io(`${API_BASE_URL}/refresh-values`, {
+          auth: { token: token2 },
+          transports: ["websocket"],
+        });
+
+        socket.on("connect_error", (err) =>
+          console.error("WS connect error:", err.message)
+        );
+
+        // 3) handle updates & additions
+        socket.on("new-check", ({ monitorId, url, status, latency, timestamp }) => {
+  setPayload(prev => {
+    const next = [...prev.slice(1), { monitorId, url, status, latency, createdAt: timestamp }];
+    
+    // recompute average
+    const avg = Math.round(
+      next.reduce((sum, p) => sum + p.latency, 0) / next.length
+    );
+    setAverage(avg);
+
+    // recompute statuses
+    setStatuses(next.map(p => p.status));
+
+    // recompute next-check timestamps
+    const lastCheckedAt = new Date(next.at(-1).createdAt);
+    const nextCheckTime = addMinutes(lastCheckedAt, 5);
+    setNext(
+      formatDistanceToNowStrict(nextCheckTime, {
+        addSuffix: true,
+        roundingMethod: "ceil",
+      })
+    );
+    setRelative(
+      formatDistanceToNow(lastCheckedAt, { addSuffix: true })
+    );
+
+    return next;
+  });
+});
+      } catch (err) {
+        console.error("Socket setup failed:", err);
+      }
+
+
+
     })();
   }, [id, navigate]);
 
@@ -102,7 +154,7 @@ const DashboardPage = () => {
                 <UptimeBars statuses={statuses} gap={3} />
                 </CardComponent>             
               </div>
-              <div className='p-4 rounded-3xl sm:col-span-2 lg:col-span-3'><AreaChartResponseTime color={payload.at(-1).status==="down"?"#ef4444":"#37c77f"} numberOfValues={payload?.length ?? 0} payload={payload} /></div>
+              <div className='p-4 rounded-3xl sm:col-span-2 lg:col-span-3'><AreaChartResponseTime color={payload.at(-1).status==="down"?"#ef4444":"#37c77f"} average={average} numberOfValues={payload?.length ?? 0} payload={payload} /></div>
             </div>
         </LayoutAuth>
     </IsAuth>

@@ -3,7 +3,7 @@ import { Monitor,Check } from "../models/index.js";
 import {io} from "../server.js"
 
 
-const INTERVAL = 5 * 60 * 1000; //change to 5 minutes later
+const INTERVAL =5 * 60 * 1000; //change to 5 minutes later
 
 const runCheck = async (monitor) => {
     
